@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko" translate="no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="google" content="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#f8f4e6">
+        <title>aquí / 아퀴</title>
+        <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/minty/bulmaswatch.min.css">
+        <style>
+        <!--
+body {
+    background: rgb(248, 244, 230);
+}
+        -->
+        </style>
+    </head>
+    <body>
+        <section class="section">
+            <div class="container">
+
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            aquí / 아퀴 
+                        </p>
+                    </header>
+                    <div class="card-image">
+                        <figure class="image is-1by1">
+                            <img id="map" src="#">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            <p class="has-text-centered">
+                                <a id="link" href="#" style="word-break: break-word;">
+                                    url 
+                                </a> 
+                            </p>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <a class="card-footer-item" href="./index.html">
+                            재실행 
+                        </a>
+                    </footer>
+                </div>
+
+            </div>
+        </section>
+        <script>
+const BASE_URL_WITH_PARM = 'https://anissatta.github.io/aqui/?lonlat=';
+
+function createMap(lonlat) {
+    const map = document.getElementById('map');
+    const link = document.getElementById('link');
+    const url = BASE_URL_WITH_PARM + lonlat;
+
+    map.src = `https://api.mapbox.com/styles/v1/anissatta/ckzdn2s29003215qnyps7rb81/static/pin-s-a+f00(${lonlat})/${lonlat},16.0,0,60/500x500?access_token=pk.eyJ1IjoiYW5pc3NhdHRhIiwiYSI6ImNreXpia3g4NjA4YjEzMHQ0Y25ubTJreXcifQ.W4eqPdhLjJhMwqWFympG2A`;
+    link.href = url;
+    link.innerText = url;
+}
+
+function init() {
+    var url_to_this = new URL(window.location.href);
+    var lonlat = url_to_this.searchParams.get('lonlat');
+
+    if(!lonlat) {
+        if(!navigator.geolocation) {
+            alert('ERROR: Geolocation is not supported by your browser');
+        } else {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    /* success */
+                    const lon = position.coords.longitude;
+                    const lat = position.coords.latitude;
+                    const lonlat = lon + ',' + lat;
+
+                    createMap(lonlat)
+                }, 
+                function () {
+                    /* error */
+                    alert('ERROR: Unable to retrieve your location');
+                });
+        }
+    } else {
+        createMap(lonlat);
+    }
+}
+
+init();
+        </script>
+    </body>
+</html>
+
